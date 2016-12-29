@@ -7,6 +7,6 @@ r.load '
   movi $eax,"string"
   puts $eax
   #DST
-  dbp $eax
+  p $eax
 '
 r.run

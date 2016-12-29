@@ -23,31 +23,31 @@ class Rasm
   end
   def init_instruct
     @@op=Hash.new
-    @@op[:movc]=->(rgs,klass){
-      @variables[rgs]=Kernel.const_get(klass)
+    @@op[:movc]=->(var,klass){
+      @variables[var]=Kernel.const_get(klass)
     }
-    @@op[:movr]=->(rgs_dst,rgs_src){
-      @variables[rgs_dst]=@variables[rgs_src]
+    @@op[:movr]=->(dst,src){
+      @variables[dst]=@variables[src]
     }
-    @@op[:movi]=->(rgs,value){
-      @variables[rgs]=value
-    }
-    
-    @@op[:save]=->(rgs,key,src){
-      @variables[rgs][key]=@variables[src]
-    }
-    @@op[:call]=->(rgs,to,fun,*arg){
-      @variables[to]=@variables[rgs].send(fun,*arg)
+    @@op[:movi]=->(var,value){
+      @variables[var]=value
     }
     
-    @@op[:puts]=->(rgs){
-      puts @variables[rgs]
+    @@op[:save]=->(var,key,src){
+      @variables[var][key]=@variables[src]
     }
-    @@op[:dbp]=->(rgs){
-      p @variables[rgs]
+    @@op[:call]=->(var,to,fun,*arg){
+      @variables[to]=@variables[var].send(fun,*arg)
     }
-    @@op[:prt]=->(rgs){
-      print @variables[rgs]
+    
+    @@op[:puts]=->(var){
+      puts @variables[var]
+    }
+    @@op[:p]=->(var){
+      p @variables[var]
+    }
+    @@op[:print]=->(var){
+      print @variables[var]
     }
     
     @@op[:je]=->(a,b,dst){
