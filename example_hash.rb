@@ -7,7 +7,7 @@ r.load '
   
   movr $eax,$ecx
   movc $ebx,:Time
-  call $ebx,$ebx,$now
+  call $ebx,$ebx,:now
   save $eax,:TIME_NOW,$ebx
   movi $ebx,0
   

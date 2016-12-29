@@ -1,4 +1,9 @@
 #coding: utf-8
+class Object
+  def to_var(_)
+    return self
+  end
+end
 class Rasm
   @@VERSION="1.0.319"
   @@op=nil
@@ -10,8 +15,14 @@ class Rasm
     def ==(o)
       o.class==self.class && o.name==name
     end
+    def hash
+      @name.hash
+    end
+    def eql?(o)
+      o.hash==hash
+    end
     def to_var(hash)
-      hash[@name]
+      hash[self]
     end
   end
   def initialize
@@ -37,7 +48,7 @@ class Rasm
       @variables[var][key]=@variables[src]
     }
     @@op[:call]=->(var,to,fun,*arg){
-      @variables[to]=@variables[var].send(fun,*arg)
+      @variables[to]=@variables[var].send(fun,*arg.map{|e| e.to_var(@variables)})
     }
     
     @@op[:puts]=->(var){
@@ -93,15 +104,15 @@ class Rasm
       oprands=data[:oprands]
       while oprands=oprands&.match(/\
 ((?<var>(\$[A-Za-z]\w*))|\
-(?<int>([-+]?0|([1-9]\d*)))|\
-(?<float>([-+]?0|([1-9]\d*)\.\d*))|\
+(?<float>([-+]?(0|([1-9]\d*))\.\d+))|\
+(?<int>([-+]?(0|([1-9]\d*))))|\
 (?<sym>(\:[^,]+))|\
 (?<label>(\#[A-Za-z]\w+))|\
 (?<string>(".*")))\
 \s*(,\s*(?<others>.*))?/)
         case
         when v=oprands[:var]
-          inst<<v[1..-1].to_sym
+          inst<<Var.new(v[1..-1].to_sym)
         when n=oprands[:int]
           inst<<n.to_i
         when f=oprands[:float]
