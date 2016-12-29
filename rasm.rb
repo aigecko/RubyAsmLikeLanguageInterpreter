@@ -2,6 +2,18 @@
 class Rasm
   @@VERSION="1.0.319"
   @@op=nil
+  class Var
+    attr_reader :name
+    def initialize(name)
+      @name=name
+    end
+    def ==(o)
+      o.class==self.class && o.name==name
+    end
+    def to_var(hash)
+      hash[@name]
+    end
+  end
   def initialize
     @variables=Hash.new
     @instructions=[]
