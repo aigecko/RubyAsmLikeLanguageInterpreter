@@ -4,6 +4,6 @@ r=Rasm.new
 r.load(
  'movi $a,0.3010
   movi $b,5
-  call $a,$c,:+,$b
+  call $c,$a,:+,$b
   puts $c')
 r.run

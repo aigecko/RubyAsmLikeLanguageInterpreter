@@ -44,10 +44,10 @@ class Rasm
       @variables[var]=value
     }
     
-    @@op[:save]=->(var,key,src){
-      @variables[var][key]=@variables[src]
+    @@op[:save]=->(src,key,var){
+      @variables[src][key]=@variables[var]
     }
-    @@op[:call]=->(var,to,fun,*arg){
+    @@op[:call]=->(to,var,fun,*arg){
       @variables[to]=@variables[var].send(fun,*arg.map{|e| e.to_var(@variables)})
     }
     

@@ -3,7 +3,7 @@ require_relative 'rasm'
 r=Rasm.new
 r.load '
   movc $eax,:Hash
-  call $eax,$ecx,:new
+  call $ecx,$eax,:new
   
   movr $eax,$ecx
   movc $ebx,:Time
@@ -13,7 +13,7 @@ r.load '
   
   movi $edx,"current_time: "
   print $edx
-  call $eax,$ebx,:[],:TIME_NOW
+  call $ebx,$eax,:[],:TIME_NOW
   puts $ebx
 '
 r.run
