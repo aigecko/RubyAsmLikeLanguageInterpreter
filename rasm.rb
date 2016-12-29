@@ -107,16 +107,4 @@ class Rasm
       @instructions<<inst
     }
   end
-  def marshal_load(ary)
-    data=ary[0]
-    @instructions=data[:inst]
-    @jmp_table=data[:jmp_table]
-    @line=data[:line]
-    @variables=data[:rgs]
-    
-    @@op or init_instruct
-  end
-  def marshal_dump
-    [{inst: @instructions,jmp_table:@jmp_table,line: @line,rgs: @variables}]
-  end
 end
