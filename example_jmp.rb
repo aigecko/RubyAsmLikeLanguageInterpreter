@@ -2,11 +2,11 @@
 require_relative 'rasm'
 r=Rasm.new
 r.load '
-  :movi,:eax,2266
-  :jmp,#DST
-  :movi,:eax,"string"
-  :puts,:eax
+  movi $eax,2266
+  jmp #DST
+  movi $eax,"string"
+  puts $eax
   #DST
-  :dbp,:eax
+  dbp $eax
 '
 r.run
