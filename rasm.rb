@@ -5,15 +5,12 @@ class Object
   end
 end
 class Rasm
-  @@VERSION="1.0.319"
+  @@VERSION="1.2.01"
   @@op=nil
   class Var
     attr_reader :name
     def initialize(name)
       @name=name
-    end
-    def ==(o)
-      o.class==self.class && o.name==name
     end
     def hash
       @name.hash
